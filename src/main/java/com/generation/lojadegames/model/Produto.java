@@ -1,13 +1,18 @@
 package com.generation.lojadegames.model;
 
+import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -26,11 +31,20 @@ public class Produto {
 	@NotBlank(message = "Informe a descrição do Jogo!")
 	@Size(min = 5, max = 40, message = "A descrição do Jogo deve ter no minimo 5 e no maximo 40 caracteres.")
 	@Column(length = 40)
-	private String descricaoJogo;
+	private String descricao;
 	
-	@NotNull(message = "O Atributo valor é obrigatório")
-	private float valor;
-
+	@NotNull(message = "A quantidade é obrigatorio!")
+	private long quantidade;
+	
+	@NotNull(message = "O Atributo valor é obrigatório!")
+	@Column(name="valor", precision=6, scale=2)
+	@Positive (message = "O valor do preço deve ser algo positivo!")
+	private BigDecimal valor;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Categoria categoria;
+	
 	public long getId() {
 		return id;
 	}
@@ -47,21 +61,31 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public String getDescricaoJogo() {
-		return descricaoJogo;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setDescricaoJogo(String descricaoJogo) {
-		this.descricaoJogo = descricaoJogo;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public float getValor() {
+	public long getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(long quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public BigDecimal getValor() {
 		return valor;
 	}
 
-	public void setValor(float valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
+	
+	
 	
 	
 }
