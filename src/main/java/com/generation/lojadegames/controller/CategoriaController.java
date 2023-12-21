@@ -47,15 +47,15 @@ public class CategoriaController {
 	}
 	
 	// Criar categoria
-	@PostMapping 
+	@PostMapping("/new")
 	public ResponseEntity<Categoria> post (@Valid @RequestBody Categoria categoria) {
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(categoriaRepository.save(categoria));
 	}
 	
 	// editar categorias
-	@PutMapping
-	public ResponseEntity<Categoria> put(@Valid @RequestBody Categoria categoria){
+	@PutMapping ("/{editar}")
+	public ResponseEntity<Categoria>put(@Valid @RequestBody Categoria categoria){
 		return categoriaRepository.findById(categoria.getId())
 				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED)
 				.body(categoriaRepository.save(categoria)))

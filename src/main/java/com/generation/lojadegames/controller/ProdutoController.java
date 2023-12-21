@@ -19,17 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.lojadegames.model.Produto;
+import com.generation.lojadegames.repository.CategoriaRepository;
 import com.generation.lojadegames.repository.ProdutoRepository;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/produtos")
-@CrossOrigin( origins = "*", allowedHeaders = "*")
+@CrossOrigin( origins = "*", allowedHeaders = "*") // conecção com o front
 public class ProdutoController {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 	
 	// Listar todos os produtos
 	@GetMapping 
